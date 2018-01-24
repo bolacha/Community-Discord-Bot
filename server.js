@@ -1,9 +1,22 @@
+//Load your bot token from your file
+var key = require("fs").readFileSync("./botKey.txt").toString();
+
+//Connect to discord
 var discordJunk = require("./discordJunk.js");
-discordJunk({"auth":"NDA1NTM0ODk0ODAyODYyMDkw.DUlzaA.THl3cWLBapgl9PHjcLoS1iysxIY"},
+discordJunk({"auth":"Bot NDA1NTM0ODk0ODAyODYyMDkw.DUlzaA.THl3cWLBapgl9PHjcLoS1iysxIY"},
 discordBot,function(err,statusCode,response) {
     console.log("Error here!");
 });
+var discordGlobal = null; //Don't actually have a use for this, just thought I'd include it
 
+//Connected to discord! Add message handlers and/or other logic here
 function discordBot(discord) {
-    console.log("Hi");
+    discordGlobal = discord;
+
+    discord.getGuilds(function(guilds){
+        console.log("Success!!");
+    },function(error,statusCode,response) {
+        console.log("error");
+    });
+
 }

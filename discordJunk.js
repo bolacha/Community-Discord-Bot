@@ -86,7 +86,7 @@ module.exports = function(options, success, error) {
                 error("gateway-timeout",null,null);
                 return;
             }
-        })
+        },3000);
         
         discordGateway.on("close",function() {
             console.log("Hi");
@@ -171,6 +171,19 @@ module.exports = function(options, success, error) {
                 if (statusCode !== 200) {
                     error("getGuild-fail",statusCode,response); return null;
                 }
+                success(response);
+            });
+        }
+        this.getGuilds = function(success, error) {
+            discordApp("/users/@me/guilds","",function(statusCode,response,res,err) {
+                if (statusCode !== 200) {
+                    error("getGuilds-fail",statusCode,response); return null;
+                }
+                var guildSnowflakes = [];
+                response.forEach(function(guild) {
+                    guildSnowflakes.push(guild["id"]);
+                });
+                success(guildSnowflakes);
             });
         }
 
@@ -183,6 +196,9 @@ module.exports = function(options, success, error) {
 
         //Other junk
         this.discordApp = discordApp;
+        this.terminate = function(success) {
+            discordGateway.close();
+        }
     }
 
     /*var messageHandlers = [];
