@@ -1,9 +1,9 @@
 //Load your bot token from your file
-var key = require("fs").readFileSync("./botKey.txt").toString();
+var botKey = require("fs").readFileSync("./botKey.txt").toString();
 
 //Connect to discord
 var discordJunk = require("./discordJunk.js");
-discordJunk({"auth":"Bot NDA1NTM0ODk0ODAyODYyMDkw.DUlzaA.THl3cWLBapgl9PHjcLoS1iysxIY"},
+discordJunk({"auth":"Bot " + botKey},
 discordBot,function(err,statusCode,response) {
     console.log("Error here!");
 });
