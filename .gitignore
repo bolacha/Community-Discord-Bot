@@ -1,2 +1,3 @@
 .vscode/launch.json
-botKey.txt
+node_modules/
+.env
