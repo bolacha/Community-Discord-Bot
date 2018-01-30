@@ -7,7 +7,7 @@ if (process.env.BOT_KEY == null) {
 }
 
 const Discord   = require('discord.js');
-const manager   = require('./helpers/commands');
+const manager   = require('./helpers/helper');
 const client    = new Discord.Client();
 
 manager.setCommands(client);
@@ -20,9 +20,7 @@ client.on('message', message => {
     if (message.author.bot) return;
     if (message.channel.type === 'dm') return;
 
-    const message_array   = message.content.split(' ');
-    const cmd             = message_array[0]; // Getting the first word as the command
-    const args            = message_array.slice(1);
+    const { cmd, args } = manager.splitter(message);
 
     if (!cmd.startsWith(process.env.PREFIX)) return;
 
