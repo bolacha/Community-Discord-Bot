@@ -1,21 +1,33 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
-require('dotenv').config()
+require('dotenv').config(); // Adding this to the first line.
 
-//checking for BOT_KEY in the environment variable
-if(process.env.BOT_KEY == null){
-  console.log("Error: BOT_KEY is not defined in the .env file. \nCreate a .env file if it doesnt exist and insert BOT_KEY = secret key of your bot");
+// Checking first if the BOT Key is setted , if not , do not even load the libraries.
+if (process.env.BOT_KEY == null) {
+  console.log('Error: BOT_KEY is not defined in the .env file. \nCreate a .env file if it doesnt exist and insert BOT_KEY = secret key of your bot');
+  return;
 }
 
+const Discord       = require('discord.js');
+const manager       = require('./helpers/helper');
+const { prefix }    = require('./config.js');
+const client        = new Discord.Client();
+
+manager.setCommands(client);
 
 client.on('ready', () => {
   console.log('I am ready!');
 });
- 
+
 client.on('message', message => {
-  if (message.content === 'ping') {
-    message.reply('pong');
-  }
+    if (message.author.bot) return;
+    if (message.channel.type === 'dm') return;
+
+    const { cmd, args } = manager.splitter(message);
+
+    if (!cmd.startsWith(prefix)) return;
+
+    const command = client.commands.get(cmd.slice(prefix.length));
+
+    if(command) command.run(client, message, args);
 });
 
 client.login(process.env.BOT_KEY);
