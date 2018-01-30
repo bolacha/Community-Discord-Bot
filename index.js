@@ -8,6 +8,7 @@ if (process.env.BOT_KEY == null) {
 
 const Discord   = require('discord.js');
 const manager   = require('./helpers/helper');
+const config    = require('./config.js');
 const client    = new Discord.Client();
 
 manager.setCommands(client);
@@ -22,9 +23,9 @@ client.on('message', message => {
 
     const { cmd, args } = manager.splitter(message);
 
-    if (!cmd.startsWith(process.env.PREFIX)) return;
+    if (!cmd.startsWith(config.prefix)) return;
 
-    let command = client.commands.get(cmd.slice(process.env.PREFIX.length));
+    const command = client.commands.get(cmd.slice(config.prefix.length));
 
     if(command) command.run(client, message, args);
 });

@@ -1,3 +1,3 @@
 module.exports = {
-    prefix: process.env.PREFIX,
+    prefix: process.env.PREFIX || '!!!'
 }
