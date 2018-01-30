@@ -1,5 +1,5 @@
-const Discord   = require('discord.js');
-const fs        = require('fs');
+const Discord   = module.require('discord.js');
+const fs        = module.require('fs');
 
 module.exports.setCommands = (client, folderOnRoot = 'commands') => {
 
