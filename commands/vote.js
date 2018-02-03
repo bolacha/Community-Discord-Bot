@@ -2,34 +2,45 @@ const agree = "✅";
 const disagree = "❎";
 const time = require('../config.js').time;
 
+
+const updateCountdown = (msg, timeLeft) => {
+
+    const content = msg.content.split("\n\n").map((current, index, array) => {
+        if(index === (array.length) - 1) {
+            if(timeLeft == 0){
+                return `Voting time finished.`;
+            } else {
+                return `This will be running for ${timeLeft} seconds.`;
+            }
+        } else {
+            return current;
+        }
+     }).join("\n\n");
+
+    msg.edit(content);
+}
+
 const timer = async (msg) => {
 
     let time_left = time / 1000;
 
-    let broken_msg = msg.content.split("\n\n");
+    var timerId = setInterval(() => {
 
-    var timerId = setInterval(countdown, 1000);
-
-    function countdown() {
         if (time_left == 1) {
             clearTimeout(timerId);
 
-            broken_msg[broken_msg.length - 1] = `Voting time already finished`;
-
-            msg.edit(broken_msg.join("\n\n"));
+            updateCountdown(msg, 0);
         } else {
-            broken_msg[broken_msg.length - 1] = `This will be running for ${time_left} seconds.`;
-
-            msg.edit(broken_msg.join("\n\n"));
+            updateCountdown(msg, time_left);
 
             time_left--;
         }
-    }
+    }, 1000);
 }
 
 module.exports.run = async (bot, message, args) => {
 
-    let msg = await message.channel.send(`Voting for : \n\n ${ args.join(" ") }\n\n by Author : ${message.author} \n\n This will be running for ${time/1000} seconds.`);
+    let msg = await message.channel.send(`Voting for : \n\n ${ args.join(" ") }\n\n by Author : ${message.author} \n\n This will be running for aproximately ${time/1000} seconds.`);
 
     await msg.react(agree);
     await msg.react(disagree);
