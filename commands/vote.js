@@ -3,10 +3,7 @@ const disagree = "❎";
 const time = 5000;
 
 module.exports.run = async (bot, message, args) => {
-
-    console.log(args);
-    console.log(message.content);
-
+    
     let msg = await message.channel.send(`Voting for : \n\n ${ args.join(" ") }\n\n by Author : ${message.author}`);
 
     await msg.react(agree);
