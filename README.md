@@ -13,8 +13,8 @@ WARNING: before pushing any code, verify the `.env` is not shown (it should alre
 Clone the repository, open up command line in the freshly cloned directory and run command `npm install && npm start`
 
 ## Versions tested for 
-npm version: 3.10.10 <br>
-node: 6.12.3
+npm version: 5.6.0 <br>
+node: 8.9.4
 
 ## Discord Bot Library
 Props to Discord.js for making an easy to use wrapper for all Discord APIs. You can find their documentation [here](https://discord.js.org/#/docs/main/stable/general/welcome)
